@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Cortex</string>
+
+    <!-- General -->
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="skip">Skip</string>
+    <string name="close">Close</string>
+    <string name="copy">Copy</string>
+    <string name="edit">Edit</string>
+
+    <!-- Bottom tabs -->
+    <string name="tab_tasks">Tasks</string>
+    <string name="tab_assistant">Assistant</string>
+    <string name="tab_memory">Memory</string>
+
+    <!-- Tasks -->
+    <string name="hint_task">Type a task, e.g. Homework at 5:00 pm</string>
+    <string name="add">Add</string>
+    <string name="speak_prompt">Speak your task, e.g. \"I have to do my homework at 5 pm\"</string>
+    <string name="speak_prompt_cortex">Speak to Cortex</string>
+    <string name="no_speech">Voice input is not available on this phone</string>
+    <string name="empty_task">Please enter a task first</string>
+    <string name="no_time">No time set</string>
+    <string name="edit_task">Edit task</string>
+    <string name="hint_title">Task title</string>
+    <string name="hint_notes">Notes (optional)</string>
+    <string name="set_time">Set date &amp; time</string>
+    <string name="clear_time">No time</string>
+    <string name="moved_to_bin">Moved to recycle bin (kept for 15 days)</string>
+
+    <!-- Notifications -->
+    <string name="notif_channel">Task reminders</string>
+    <string name="notif_title">Task reminder</string>
+    <string name="notif_title_again">Reminder again</string>
+
+    <!-- Menu -->
+    <string name="menu_bin">Recycle bin</string>
+    <string name="menu_second_reminder">Second reminder</string>
+    <string name="menu_spoken">Spoken replies</string>
+    <string name="menu_theme_mode">Theme mode</string>
+    <string name="menu_accent">Accent colour</string>
+    <string name="menu_name">Change my name</string>
+    <string name="menu_backup">Backup data</string>
+    <string name="menu_restore">Restore / import data</string>
+
+    <!-- Recycle bin -->
+    <string name="bin_title">Recycle bin</string>
+    <string name="bin_info">Deleted tasks are kept here for 15 days as a record, then removed automatically.</string>
+    <string name="bin_empty">The recycle bin is empty</string>
+
+    <!-- Name and greeting -->
+    <string name="ask_name_title">What should I call you?</string>
+    <string name="hint_name">Your name</string>
+    <string name="subtitle_none">No tasks yet. Add one below.</string>
+    <string name="subtitle_all_done">All tasks done. Great job!</string>
+    <plurals name="subtitle_left">
+        <item quantity="one">%d task left</item>
+        <item quantity="other">%d tasks left</item>
+    </plurals>
+
+    <!-- Themes -->
+    <string name="mode_system">System default</string>
+    <string name="mode_light">Light</string>
+    <string name="mode_dark">Dark</string>
+    <string name="accent_purple">Purple (default)</string>
+    <string name="accent_teal">Teal</string>
+    <string name="accent_blue">Blue</string>
+    <string name="accent_orange">Orange</string>
+    <string name="accent_pink">Pink</string>
+
+    <!-- Second reminder + spoken replies settings -->
+    <string name="second_off">Off</string>
+    <string name="second_after">After %1$d minutes</string>
+    <string name="second_after_default">After %1$d minutes (default)</string>
+    <string name="second_set_on">Second reminder: %1$d minutes after the first one</string>
+    <string name="second_set_off">Second reminder is off</string>
+    <string name="spoken_on">On</string>
+    <string name="spoken_off">Off</string>
+
+    <!-- Backup and restore -->
+    <string name="backup_done_mem">Backup saved (%1$d tasks, %2$d memories)</string>
+    <string name="backup_failed">Could not save the backup</string>
+    <string name="restore_done_mem">Restored %1$d tasks (%2$d already existed) and %3$d memories (%4$d already existed)</string>
+    <string name="restore_bad_file">This file is not a Cortex or Task Reminder backup</string>
+    <string name="restore_failed">Could not read the backup file</string>
+
+    <!-- Memory -->
+    <string name="mem_title">Memory</string>
+    <string name="mem_info">Keep facts and info you want to remember. These never send reminders. Tap a memory to read it.</string>
+    <string name="mem_search_hint">Search memories</string>
+    <string name="mem_empty">Nothing saved yet. Tap + to add a memory.</string>
+    <string name="mem_add">Add memory</string>
+    <string name="mem_edit">Edit memory</string>
+    <string name="mem_hint_title">Title, e.g. Wi-Fi password</string>
+    <string name="mem_hint_content">What do you want to remember?</string>
+    <string name="mem_hint_tag">Tag (optional), e.g. Home</string>
+    <string name="mem_pin">Pin to top</string>
+    <string name="mem_all_tags">All</string>
+    <string name="mem_untagged">Untagged</string>
+    <string name="mem_copied">Copied to clipboard</string>
+    <string name="mem_saved">Memory saved</string>
+    <string name="mem_title_required">Please enter a title</string>
+    <string name="mem_delete_title">Delete this memory?</string>
+    <string name="mem_delete_msg">This cannot be undone.</string>
+    <string name="mem_deleted">Memory deleted</string>
+    <string name="mem_meta_format">%1$s · Saved %2$s</string>
+    <string name="mem_no_match">No memories match your search</string>
+    <string name="mem_delete_yes">Delete</string>
+    <string name="mem_no_content">No more details saved.</string>
+
+    <!-- Voice commands / Assistant -->
+    <string name="cmd_tile_label">Cortex voice</string>
+    <string name="cmd_task_added">Task added: %1$s</string>
+    <string name="cmd_task_set_time">Reminder set: %1$s (%2$s)</string>
+    <string name="cmd_memory_saved">Saved to Memory: %1$s</string>
+    <string name="cmd_nothing_to_save">I did not catch what to save.</string>
+    <string name="assistant_hint_title">Talk or type to Cortex</string>
+    <string name="assistant_hint_examples">Try:\n• \"Remind me to call Mom at 6 pm\" → saves a task\n• \"Remember my locker number is 42\" → saves a memory\n• \"Open WhatsApp\" → opens an app\n• \"Go home\" or \"Close\" → goes to the home screen</string>
+    <string name="assistant_input_hint">Type a command</string>
+    <string name="assistant_send">Send</string>
+    <string name="assistant_home">Going to the home screen.</string>
+    <string name="assistant_opening">Opening %1$s.</string>
+    <string name="assistant_app_not_found">Sorry, I could not find an app called %1$s.</string>
+    <string name="assistant_file_not_ready">Sorry, opening files is not available yet.</string>
+    <string name="assistant_sorry">Sorry, I can\'t help with that. Say \"remind me…\" to save a task, or \"remember…\" to save a memory.</string>
+    <string name="assistant_you">You</string>
+    <string name="assistant_cortex">Cortex</string>
+</resources>

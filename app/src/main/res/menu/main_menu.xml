@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_bin"
+        android:title="@string/menu_bin"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_second_reminder"
+        android:title="@string/menu_second_reminder"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_spoken"
+        android:title="@string/menu_spoken"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_theme_mode"
+        android:title="@string/menu_theme_mode"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_accent"
+        android:title="@string/menu_accent"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_name"
+        android:title="@string/menu_name"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_backup"
+        android:title="@string/menu_backup"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_restore"
+        android:title="@string/menu_restore"
+        app:showAsAction="never" />
+
+</menu>

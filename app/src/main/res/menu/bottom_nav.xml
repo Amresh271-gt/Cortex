@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_tasks"
+        android:icon="@drawable/ic_nav_tasks"
+        android:title="@string/tab_tasks" />
+
+    <item
+        android:id="@+id/nav_assistant"
+        android:icon="@drawable/ic_nav_assistant"
+        android:title="@string/tab_assistant" />
+
+    <item
+        android:id="@+id/nav_memory"
+        android:icon="@drawable/ic_nav_memory"
+        android:title="@string/tab_memory" />
+
+</menu>
