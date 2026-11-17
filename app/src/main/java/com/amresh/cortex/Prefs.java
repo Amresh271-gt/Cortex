@@ -25,6 +25,11 @@ public class Prefs {
     private static final String K_SECOND_ON = "second_reminder_on";
     private static final String K_SECOND_GAP = "second_reminder_gap_min";
     private static final String K_SPOKEN = "spoken_replies";
+    private static final String K_BIRTH = "birth_millis";
+    private static final String K_BIRTH_HAS_TIME = "birth_has_time";
+    private static final String K_LIFE_UPDATED = "life_updated_at";
+    private static final String K_FAB_X = "fab_x";
+    private static final String K_FAB_Y = "fab_y";
 
     private static SharedPreferences sp(Context c) {
         return c.getApplicationContext().getSharedPreferences(FILE, Context.MODE_PRIVATE);
@@ -92,5 +97,45 @@ public class Prefs {
 
     public static void setSpokenOn(Context c, boolean on) {
         sp(c).edit().putBoolean(K_SPOKEN, on).apply();
+    }
+
+    // ------------------------------------------------------- profile / life counter
+
+    /** Date (and time, if known) of birth in epoch millis, or 0 when not set yet. */
+    public static long getBirthMillis(Context c) {
+        return sp(c).getLong(K_BIRTH, 0);
+    }
+
+    /** True when the user also gave a time of birth (otherwise midnight is used). */
+    public static boolean hasBirthTime(Context c) {
+        return sp(c).getBoolean(K_BIRTH_HAS_TIME, false);
+    }
+
+    public static void setBirth(Context c, long millis, boolean hasTime) {
+        sp(c).edit().putLong(K_BIRTH, millis).putBoolean(K_BIRTH_HAS_TIME, hasTime).apply();
+    }
+
+    /** The moment the life counter was last updated by the user, or 0 if never. */
+    public static long getLifeUpdatedAt(Context c) {
+        return sp(c).getLong(K_LIFE_UPDATED, 0);
+    }
+
+    public static void setLifeUpdatedAt(Context c, long millis) {
+        sp(c).edit().putLong(K_LIFE_UPDATED, millis).apply();
+    }
+
+    // ------------------------------------------------------- floating schedule button
+
+    /** Saved position of the floating button as fractions (0..1) of the free space, or -1 if never moved. */
+    public static float getFabX(Context c) {
+        return sp(c).getFloat(K_FAB_X, -1f);
+    }
+
+    public static float getFabY(Context c) {
+        return sp(c).getFloat(K_FAB_Y, -1f);
+    }
+
+    public static void setFabPosition(Context c, float x, float y) {
+        sp(c).edit().putFloat(K_FAB_X, x).putFloat(K_FAB_Y, y).apply();
     }
 }

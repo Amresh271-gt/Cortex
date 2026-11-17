@@ -41,7 +41,8 @@
     <string name="menu_spoken">Spoken replies</string>
     <string name="menu_theme_mode">Theme mode</string>
     <string name="menu_accent">Accent colour</string>
-    <string name="menu_name">Change my name</string>
+    <string name="menu_schedule">Schedule</string>
+    <string name="menu_profile">Profile</string>
     <string name="menu_backup">Backup data</string>
     <string name="menu_restore">Restore / import data</string>
 
@@ -49,6 +50,50 @@
     <string name="bin_title">Recycle bin</string>
     <string name="bin_info">Deleted tasks are kept here for 15 days as a record, then removed automatically.</string>
     <string name="bin_empty">The recycle bin is empty</string>
+    <string name="bin_tab_tasks">Tasks</string>
+    <string name="bin_tab_schedules">Schedules</string>
+    <string name="bin_info_schedules">Schedules of past days are kept here for 15 days, then removed automatically.</string>
+    <string name="bin_empty_schedules">No past schedules in the bin</string>
+    <string name="bin_delete_all">Delete all</string>
+    <string name="bin_delete_forever">Delete permanently</string>
+    <string name="bin_delete_title">Delete permanently?</string>
+    <string name="bin_delete_msg">This cannot be undone.</string>
+    <string name="bin_delete_yes">Delete</string>
+    <string name="bin_delete_all_tasks_title">Delete all tasks in the bin?</string>
+    <string name="bin_delete_all_schedules_title">Delete all schedules in the bin?</string>
+
+    <!-- Schedule -->
+    <string name="schedule_title">Schedule</string>
+    <string name="schedule_today">Today</string>
+    <string name="schedule_tomorrow">Tomorrow</string>
+    <string name="schedule_empty">Nothing scheduled for this day.\nTasks with a time on this day appear here automatically.</string>
+    <string name="schedule_add">Add to schedule</string>
+    <string name="schedule_add_title">Add to schedule</string>
+    <string name="schedule_hint_title">What is planned?</string>
+    <string name="schedule_set_time">Set time</string>
+    <string name="schedule_any_time">Any time</string>
+    <string name="schedule_from_task">From your tasks</string>
+    <string name="schedule_added_here">Added here</string>
+    <string name="schedule_remove">Remove from schedule</string>
+    <string name="schedule_removed">Removed from the schedule</string>
+    <string name="schedule_removed_task">Removed from the schedule. The task is still in your task list.</string>
+
+    <!-- Profile and life counter -->
+    <string name="profile_title">Profile</string>
+    <string name="profile_name_label">Name (used in the greeting)</string>
+    <string name="profile_birth_label">Date and time of birth</string>
+    <string name="profile_set_date">Set date</string>
+    <string name="profile_set_time">Set time</string>
+    <string name="profile_clear_time">Time of birth unknown</string>
+    <string name="profile_saved">Profile saved</string>
+    <string name="life_title">Life counter</string>
+    <string name="life_not_updated">Set your date of birth, then tap Update.</string>
+    <string name="life_need_birth">Please set your date of birth first.</string>
+    <string name="life_days">%1$d days</string>
+    <string name="life_breakdown">%1$d y  %2$d m  %3$d d  %4$d h  %5$d min</string>
+    <string name="life_hours">%1$d hours in total</string>
+    <string name="life_update">Update now</string>
+    <string name="life_last_updated">Last updated: %1$s</string>
 
     <!-- Name and greeting -->
     <string name="ask_name_title">What should I call you?</string>

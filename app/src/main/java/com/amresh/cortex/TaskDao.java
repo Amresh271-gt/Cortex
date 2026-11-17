@@ -38,4 +38,12 @@ public interface TaskDao {
     /** Permanently removes bin items deleted before the cutoff time. */
     @Query("DELETE FROM tasks WHERE deletedAt > 0 AND deletedAt < :cutoff")
     int purgeBinOlderThan(long cutoff);
+
+    /** Permanently deletes one task that is in the recycle bin. */
+    @Query("DELETE FROM tasks WHERE id = :id AND deletedAt > 0")
+    void deleteFromBin(long id);
+
+    /** Permanently deletes every task in the recycle bin. */
+    @Query("DELETE FROM tasks WHERE deletedAt > 0")
+    int deleteAllFromBin();
 }

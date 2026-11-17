@@ -9,12 +9,11 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.text.InputFilter;
-import android.text.InputType;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.MenuItem;
-import android.widget.EditText;
-import android.widget.FrameLayout;
+import android.view.View;
+import android.view.ViewConfiguration;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +47,7 @@ import java.util.Locale;
 /**
  * Cortex main screen: greeting on top, three tabs below (Tasks | Assistant | Memory),
  * switched by tapping the bottom bar or swiping. The top menu holds the settings.
+ * A small floating button (drag it anywhere) opens today's schedule.
  */
 public class MainActivity extends AppCompatActivity {
 
@@ -96,11 +96,17 @@ public class MainActivity extends AppCompatActivity {
         db.taskDao().observeActive().observe(this, this::updateSubtitle);
 
         setupTabs();
+        setupScheduleButton();
         askForPermissions();
 
+        // Past schedules move to the bin and today's tasks are pulled into the schedule.
+        final Context app = getApplicationContext();
+        AppDatabase.IO.execute(() -> ScheduleManager.sync(app));
+
+        // First start: the name is set up in the profile (it is used in the greeting).
         if (!Prefs.wasNameAsked(this)) {
             Prefs.setNameAsked(this);
-            showNameDialog();
+            startActivity(new Intent(this, ProfileActivity.class));
         }
     }
 
@@ -161,6 +167,68 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    // ------------------------------------------------- floating schedule button
+
+    /**
+     * The round button over the screen: a tap opens today's schedule, dragging moves it.
+     * Its position is remembered (as a fraction of the screen, so it survives rotation).
+     */
+    private void setupScheduleButton() {
+        final View root = findViewById(R.id.root);
+        final View fab = findViewById(R.id.fabSchedule);
+        final int slop = ViewConfiguration.get(this).getScaledTouchSlop();
+
+        // Put it back where it was left last time.
+        root.post(() -> {
+            float fx = Prefs.getFabX(this);
+            float fy = Prefs.getFabY(this);
+            if (fx >= 0 && fy >= 0) {
+                fab.setX(fx * Math.max(0, root.getWidth() - fab.getWidth()));
+                fab.setY(fy * Math.max(0, root.getHeight() - fab.getHeight()));
+            }
+        });
+
+        fab.setOnTouchListener(new View.OnTouchListener() {
+            private float downRawX, downRawY, startX, startY;
+            private boolean dragging;
+
+            @Override
+            public boolean onTouch(View v, MotionEvent e) {
+                switch (e.getActionMasked()) {
+                    case MotionEvent.ACTION_DOWN:
+                        downRawX = e.getRawX();
+                        downRawY = e.getRawY();
+                        startX = v.getX();
+                        startY = v.getY();
+                        dragging = false;
+                        return true;
+                    case MotionEvent.ACTION_MOVE:
+                        float dx = e.getRawX() - downRawX;
+                        float dy = e.getRawY() - downRawY;
+                        if (!dragging && Math.abs(dx) < slop && Math.abs(dy) < slop) return true;
+                        dragging = true;
+                        float maxX = Math.max(0, root.getWidth() - v.getWidth());
+                        float maxY = Math.max(0, root.getHeight() - v.getHeight());
+                        v.setX(Math.min(Math.max(0, startX + dx), maxX));
+                        v.setY(Math.min(Math.max(0, startY + dy), maxY));
+                        return true;
+                    case MotionEvent.ACTION_UP:
+                        if (dragging) {
+                            float freeX = Math.max(1, root.getWidth() - v.getWidth());
+                            float freeY = Math.max(1, root.getHeight() - v.getHeight());
+                            Prefs.setFabPosition(MainActivity.this, v.getX() / freeX, v.getY() / freeY);
+                        } else {
+                            v.performClick();
+                        }
+                        return true;
+                    default:
+                        return true;
+                }
+            }
+        });
+        fab.setOnClickListener(v -> startActivity(new Intent(this, ScheduleActivity.class)));
+    }
+
     // ---------------------------------------------------------------- menu
 
     @Override
@@ -172,7 +240,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.menu_bin) {
+        if (id == R.id.menu_schedule) {
+            startActivity(new Intent(this, ScheduleActivity.class));
+            return true;
+        } else if (id == R.id.menu_profile) {
+            startActivity(new Intent(this, ProfileActivity.class));
+            return true;
+        } else if (id == R.id.menu_bin) {
             startActivity(new Intent(this, BinActivity.class));
             return true;
         } else if (id == R.id.menu_second_reminder) {
@@ -186,9 +260,6 @@ public class MainActivity extends AppCompatActivity {
             return true;
         } else if (id == R.id.menu_accent) {
             showAccentDialog();
-            return true;
-        } else if (id == R.id.menu_name) {
-            showNameDialog();
             return true;
         } else if (id == R.id.menu_backup) {
             String stamp = new SimpleDateFormat("yyyyMMdd", Locale.US).format(new Date());
@@ -228,30 +299,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             tvSubtitle.setText(getResources().getQuantityString(R.plurals.subtitle_left, left, left));
         }
-    }
-
-    private void showNameDialog() {
-        final EditText input = new EditText(this);
-        input.setHint(R.string.hint_name);
-        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
-        input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(30)});
-        input.setText(Prefs.getName(this));
-        input.setSelection(input.getText().length());
-
-        int pad = (int) (20 * getResources().getDisplayMetrics().density);
-        FrameLayout box = new FrameLayout(this);
-        box.setPadding(pad, pad / 2, pad, 0);
-        box.addView(input);
-
-        new AlertDialog.Builder(this)
-                .setTitle(R.string.ask_name_title)
-                .setView(box)
-                .setPositiveButton(R.string.save, (d, w) -> {
-                    Prefs.setName(this, input.getText().toString());
-                    updateGreeting();
-                })
-                .setNegativeButton(R.string.skip, null)
-                .show();
     }
 
     // ------------------------------------------------- reminder + voice settings

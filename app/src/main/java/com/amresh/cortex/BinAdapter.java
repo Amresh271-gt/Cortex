@@ -4,6 +4,7 @@ import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,12 +13,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-/** Read-only list of deleted tasks. They stay for 15 days and are then removed automatically. */
+/** List of deleted tasks. They stay for 15 days and are then removed automatically; each can also be deleted for good. */
 public class BinAdapter extends RecyclerView.Adapter<BinAdapter.Holder> {
+
+    public interface Listener {
+        void onDeleteForever(Task task);
+    }
 
     private static final long DAY = 24L * 60 * 60 * 1000;
 
     private final List<Task> items = new ArrayList<>();
+    private final Listener listener;
+
+    public BinAdapter(Listener listener) {
+        this.listener = listener;
+    }
 
     public void setTasks(List<Task> tasks) {
         items.clear();
@@ -34,8 +44,9 @@ public class BinAdapter extends RecyclerView.Adapter<BinAdapter.Holder> {
 
     @Override
     public void onBindViewHolder(@NonNull Holder h, int position) {
-        Task t = items.get(position);
+        final Task t = items.get(position);
         h.title.setText(t.title);
+        h.delete.setOnClickListener(v -> listener.onDeleteForever(t));
 
         if (t.notes != null && !t.notes.trim().isEmpty()) {
             h.notes.setText(t.notes);
@@ -63,12 +74,14 @@ public class BinAdapter extends RecyclerView.Adapter<BinAdapter.Holder> {
         final TextView title;
         final TextView notes;
         final TextView info;
+        final Button delete;
 
         Holder(View v) {
             super(v);
             title = v.findViewById(R.id.tvBinTitle);
             notes = v.findViewById(R.id.tvBinNotes);
             info = v.findViewById(R.id.tvBinInfo);
+            delete = v.findViewById(R.id.btnBinDelete);
         }
     }
 }
